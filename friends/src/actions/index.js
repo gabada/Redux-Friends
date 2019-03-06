@@ -20,19 +20,19 @@ export const login = credentials => dispatch => {
         })
 }
 
-export const fetchData = dispatch => {
-    return dispatch => {
+export const fetchData = token => dispatch => {
         dispatch({ type: FETCHING });
         axios
-            .get('htpp://localhost:5000/api/friends/eyJ1c2VySWQiOiJiMDhmODZhZi0zNWRhLTQ4ZjItOGZhYi1jZWYzOTA0NjYwYmQifQ')
+            .get(`http://localhost:5000/api/friends/`, { headers: { authorization: token }
+        })
             .then(res => {
+                console.log("FRIENDS", res.data);
                 dispatch({
                     type: SUCCESS,
-                    payload: res.friends
+                    payload: res.data
                 });
             })
             .catch(err => {
-                dispatch({ type: Error, payload: "These are not the droids you're looking for" });
+                dispatch({ type: FAILURE, payload: "You have no friends" });
             });
-    };
 }

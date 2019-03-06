@@ -6,7 +6,8 @@ const initialState = {
     friends: [],
     fetching: false,
     error: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    token: ''
 };
 
 export const friendReducer = (state = initialState, action) => {
@@ -16,7 +17,8 @@ export const friendReducer = (state = initialState, action) => {
                 ...state,
                 fetching: false,
                 error: '',
-                isLoggedIn: true
+                isLoggedIn: true,
+                token: action.payload
             }
         default:
             return state;
