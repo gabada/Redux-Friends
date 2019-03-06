@@ -6,6 +6,9 @@ export const FAILURE = "FAILURE";
 export const LOGIN = "LOGIN";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const ADD_FRIEND = "ADD_FRIEND";
+export const ADD_SUCCESS = "ADD_SUCCESS";
+export const ADD_FAILURE = "ADD_FAILURE";
 
 
 export const login = credentials => dispatch => {
@@ -20,13 +23,12 @@ export const login = credentials => dispatch => {
         })
 }
 
-export const fetchData = token => dispatch => {
+export const fetchData = () => (dispatch, getState) => {
         dispatch({ type: FETCHING });
         axios
-            .get(`http://localhost:5000/api/friends/`, { headers: { authorization: token }
+            .get(`http://localhost:5000/api/friends/`, { headers: { authorization: getState().token }
         })
             .then(res => {
-                console.log("FRIENDS", res.data);
                 dispatch({
                     type: SUCCESS,
                     payload: res.data
@@ -35,4 +37,20 @@ export const fetchData = token => dispatch => {
             .catch(err => {
                 dispatch({ type: FAILURE, payload: "You have no friends" });
             });
+}
+
+export const addFriend = friend => (dispatch, getState) => {
+    dispatch({ type: ADD_FRIEND });
+    axios
+        .post(`http://localhost:5000/api/friends/`, friend , { headers: { authorization: getState().token }
+    })
+        .then(res => {
+            dispatch({
+                type: ADD_SUCCESS,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            dispatch({ type: ADD_FAILURE, payload: "They didn't want to be your friend. Sorry"});
+        });
 }
