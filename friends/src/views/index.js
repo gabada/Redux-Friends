@@ -21,6 +21,7 @@ class FriendsListView extends React.Component {
                         <li>Name: {friend.name}</li>
                         <li>Age: {friend.age}</li>
                         <li>E-mail: {friend.email}</li>
+                        <li>Gender: {friend.gender}</li>
                     </ul>
                 )
             })}
