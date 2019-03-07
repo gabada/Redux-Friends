@@ -14,8 +14,7 @@ class App extends Component {
     <>
     <ul>
       <li>
-        {!localStorage.getItem('token') && <Link to="/login/">Login Now</Link>}
-        {localStorage.getItem('token') && <Link to="/logout/">Logout</Link>}
+        {!localStorage.getItem('token') ? <Link to="/login/">Login Now</Link> : <Link to="/logout/">Logout</Link>}
       </li>
     </ul>
     <h1>Friends App</h1>
