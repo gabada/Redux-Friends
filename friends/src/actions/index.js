@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../authentication/axiosAuth';
 
 export const FETCHING = "FETCHING";
 export const SUCCESS = "SUCCESS";
@@ -13,21 +13,24 @@ export const ADD_FAILURE = "ADD_FAILURE";
 
 export const login = credentials => dispatch => {
     dispatch({ type: LOGIN });
-    axios
+    return axios()
         .post('http://localhost:5000/api/login', credentials)
         .then(res => {
+            localStorage.setItem('token', res.data.payload)
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data.payload
             })
         })
+        .catch(err => {
+            dispatch({ type: LOGIN_FAILURE, payload: err.response.message })
+        })
 }
 
-export const fetchData = () => (dispatch, getState) => {
+export const fetchData = () => (dispatch) => {
         dispatch({ type: FETCHING });
-        axios
-            .get(`http://localhost:5000/api/friends/`, { headers: { authorization: getState().token }
-        })
+        axios()
+            .get(`http://localhost:5000/api/friends/`)
             .then(res => {
                 dispatch({
                     type: SUCCESS,
@@ -41,9 +44,8 @@ export const fetchData = () => (dispatch, getState) => {
 
 export const addFriend = friend => (dispatch, getState) => {
     dispatch({ type: ADD_FRIEND });
-    axios
-        .post(`http://localhost:5000/api/friends/`, friend , { headers: { authorization: getState().token }
-    })
+    axios()
+        .post(`http://localhost:5000/api/friends/`, friend)
         .then(res => {
             dispatch({
                 type: ADD_SUCCESS,

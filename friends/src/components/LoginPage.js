@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 const LoginPage = props => {
     const [username, setUsername] = useState('');
@@ -8,7 +9,10 @@ const LoginPage = props => {
             <h1>LOGIN</h1>
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    props.onSubmit({ username, password });
+                    props.login({ username, password })
+                    .then(() => {
+                        props.history.push('/friendslist');
+                    })
                     setUsername('');
                     setPassword('');
                 }}>
@@ -32,4 +36,4 @@ const LoginPage = props => {
     )
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);
