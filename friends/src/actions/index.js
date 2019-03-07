@@ -42,7 +42,7 @@ export const fetchData = () => (dispatch) => {
             });
 }
 
-export const addFriend = friend => (dispatch, getState) => {
+export const addFriend = friend => (dispatch) => {
     dispatch({ type: ADD_FRIEND });
     axios()
         .post(`http://localhost:5000/api/friends/`, friend)
