@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, SUCCESS, ADD_SUCCESS } from "../actions";
+import { LOGIN_SUCCESS, SUCCESS, ADD_SUCCESS, FAILURE, ADD_FAILURE } from "../actions";
 
 const initialState = {
     friends: [],
@@ -28,6 +28,16 @@ export const friendReducer = (state = initialState, action) => {
             return {
                 ...state,
                 friends: action.payload
+            }
+        case FAILURE:
+            return {
+                ...state,
+                error: action.payload
+            }
+        case ADD_FAILURE:
+            return {
+                ...state,
+                error: action.payload
             }
         default:
             return state;
